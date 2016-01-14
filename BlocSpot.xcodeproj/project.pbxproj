@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224341711C442E8800197DE8 /* DMNS.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 2243416F1C442E8800197DE8 /* DMNS.gpx */; };
+		224341721C442E8800197DE8 /* Denver Art Museum.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 224341701C442E8800197DE8 /* Denver Art Museum.gpx */; };
 		2294D4041C3DA2DF004328A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4031C3DA2DF004328A3 /* AppDelegate.swift */; };
 		2294D4091C3DA2DF004328A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2294D4071C3DA2DF004328A3 /* Main.storyboard */; };
 		2294D40C1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2294D40A1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld */; };
@@ -16,6 +18,14 @@
 		2294D4271C3DA2DF004328A3 /* BlocSpotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4261C3DA2DF004328A3 /* BlocSpotUITests.swift */; };
 		2294D4771C3DA38F004328A3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4761C3DA38F004328A3 /* MainViewController.swift */; };
 		2294D47A1C3DA434004328A3 /* LocationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4791C3DA434004328A3 /* LocationDataSource.swift */; };
+		2294D4821C3EEF57004328A3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2294D4811C3EEF57004328A3 /* MapKit.framework */; };
+		2294D4841C3EF4FC004328A3 /* SearchSpots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4831C3EF4FC004328A3 /* SearchSpots.swift */; };
+		2294D4861C3FEE55004328A3 /* POIx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4851C3FEE55004328A3 /* POIx.swift */; };
+		2294D4881C401634004328A3 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4871C401634004328A3 /* ListViewController.swift */; };
+		2294D48A1C4027D8004328A3 /* SearchSpotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */; };
+		22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */; };
+		22B812741C4732CD00252FC5 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B812721C4732CD00252FC5 /* Spot.swift */; };
+		22E8F2AF1C46F16B004E0906 /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8F2AE1C46F16B004E0906 /* SpotTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2243416F1C442E8800197DE8 /* DMNS.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DMNS.gpx; sourceTree = "<group>"; };
+		224341701C442E8800197DE8 /* Denver Art Museum.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Denver Art Museum.gpx"; sourceTree = "<group>"; };
 		2294D4001C3DA2DF004328A3 /* BlocSpot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlocSpot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2294D4031C3DA2DF004328A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2294D4081C3DA2DF004328A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,6 +63,14 @@
 		2294D4281C3DA2DF004328A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2294D4761C3DA38F004328A3 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2294D4791C3DA434004328A3 /* LocationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataSource.swift; sourceTree = "<group>"; };
+		2294D4811C3EEF57004328A3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		2294D4831C3EF4FC004328A3 /* SearchSpots.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSpots.swift; sourceTree = "<group>"; };
+		2294D4851C3FEE55004328A3 /* POIx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIx.swift; sourceTree = "<group>"; };
+		2294D4871C401634004328A3 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSpotsTests.swift; sourceTree = "<group>"; };
+		22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		22B812721C4732CD00252FC5 /* Spot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
+		22E8F2AE1C46F16B004E0906 /* SpotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2294D4821C3EEF57004328A3 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +102,7 @@
 		2294D3F71C3DA2DE004328A3 = {
 			isa = PBXGroup;
 			children = (
+				2294D4811C3EEF57004328A3 /* MapKit.framework */,
 				2294D4021C3DA2DF004328A3 /* BlocSpot */,
 				2294D41A1C3DA2DF004328A3 /* BlocSpotTests */,
 				2294D4251C3DA2DF004328A3 /* BlocSpotUITests */,
@@ -108,6 +130,9 @@
 				2294D40F1C3DA2DF004328A3 /* LaunchScreen.storyboard */,
 				2294D4121C3DA2DF004328A3 /* Info.plist */,
 				2294D4761C3DA38F004328A3 /* MainViewController.swift */,
+				2294D4871C401634004328A3 /* ListViewController.swift */,
+				2243416F1C442E8800197DE8 /* DMNS.gpx */,
+				224341701C442E8800197DE8 /* Denver Art Museum.gpx */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -115,8 +140,10 @@
 		2294D41A1C3DA2DF004328A3 /* BlocSpotTests */ = {
 			isa = PBXGroup;
 			children = (
+				2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */,
 				2294D41B1C3DA2DF004328A3 /* BlocSpotTests.swift */,
 				2294D41D1C3DA2DF004328A3 /* Info.plist */,
+				22E8F2AE1C46F16B004E0906 /* SpotTests.swift */,
 			);
 			path = BlocSpotTests;
 			sourceTree = "<group>";
@@ -133,8 +160,12 @@
 		2294D4781C3DA398004328A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */,
+				22B812721C4732CD00252FC5 /* Spot.swift */,
 				2294D40A1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld */,
 				2294D4791C3DA434004328A3 /* LocationDataSource.swift */,
+				2294D4831C3EF4FC004328A3 /* SearchSpots.swift */,
+				2294D4851C3FEE55004328A3 /* POIx.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -207,6 +238,11 @@
 				TargetAttributes = {
 					2294D3FF1C3DA2DF004328A3 = {
 						CreatedOnToolsVersion = 7.2;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					2294D4161C3DA2DF004328A3 = {
 						CreatedOnToolsVersion = 7.2;
@@ -246,6 +282,8 @@
 				2294D4111C3DA2DF004328A3 /* LaunchScreen.storyboard in Resources */,
 				2294D40E1C3DA2DF004328A3 /* Assets.xcassets in Resources */,
 				2294D4091C3DA2DF004328A3 /* Main.storyboard in Resources */,
+				224341721C442E8800197DE8 /* Denver Art Museum.gpx in Resources */,
+				224341711C442E8800197DE8 /* DMNS.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,8 +310,13 @@
 			files = (
 				2294D4771C3DA38F004328A3 /* MainViewController.swift in Sources */,
 				2294D40C1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld in Sources */,
+				2294D4841C3EF4FC004328A3 /* SearchSpots.swift in Sources */,
 				2294D4041C3DA2DF004328A3 /* AppDelegate.swift in Sources */,
+				2294D4861C3FEE55004328A3 /* POIx.swift in Sources */,
 				2294D47A1C3DA434004328A3 /* LocationDataSource.swift in Sources */,
+				22B812741C4732CD00252FC5 /* Spot.swift in Sources */,
+				2294D4881C401634004328A3 /* ListViewController.swift in Sources */,
+				22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +325,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2294D41C1C3DA2DF004328A3 /* BlocSpotTests.swift in Sources */,
+				2294D48A1C4027D8004328A3 /* SearchSpotsTests.swift in Sources */,
+				22E8F2AF1C46F16B004E0906 /* SpotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BlocSpot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.BlocSpot;
@@ -426,6 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BlocSpot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.BlocSpot;
@@ -500,6 +547,7 @@
 				2294D42D1C3DA2DF004328A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2294D42E1C3DA2DF004328A3 /* Build configuration list for PBXNativeTarget "BlocSpotTests" */ = {
 			isa = XCConfigurationList;
@@ -508,6 +556,7 @@
 				2294D4301C3DA2DF004328A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2294D4311C3DA2DF004328A3 /* Build configuration list for PBXNativeTarget "BlocSpotUITests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +565,7 @@
 				2294D4331C3DA2DF004328A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
