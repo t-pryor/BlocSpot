@@ -14,13 +14,22 @@ class Spot: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
-    init() {
-        if let entity = NSEntityDescription.entityForName("Spot",
-            inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext) {
-                super.init(entity: entity, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
-                return
-        }
-        super.init()
-        return
+//    init() {
+//        if let entity = NSEntityDescription.entityForName("Spot",
+//            inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext) {
+//                super.init(entity: entity, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
+//                return
+//        } else {
+//            super.init()
+//            return
+//        }
+//    }
+
+    
+    // &* why do I need override keyword?
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
+
+
 }

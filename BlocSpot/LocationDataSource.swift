@@ -12,8 +12,11 @@ import CoreLocation
 
 class LocationDataSource: NSObject, CLLocationManagerDelegate
 {
-    private var privateSpots = [Spot]()
+    
     private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
+    
+    
+    private var privateSpots = [Spot]()
     
     var allSpots: [Spot] {
         var spotsCopy = [Spot]()
@@ -44,6 +47,92 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         self.locationManager.requestWhenInUseAuthorization()
         
     }
+    
+//---
+    func loadSpotsIntoStore() {
+        
+        var spotsArrayCopy = [Spot]()
+        
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entityDescription
+        
+        do {
+            let spotsArrayCopy = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+    
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        
+        for spot in spotsArrayCopy {
+            print(spot)
+        }
+        
+        self.privateSpots = spotsArrayCopy
+//
+//        dispatch_sync(self.concurrentSpotQueue) {
+//            spotsArrayCopy =
+//            
+//        }
+    }
+
+//---
+    func fetchSpotFromStoreWithTitle(title: String) -> [Spot] {
+        
+        var spotsArrayCopy = [Spot]()
+        
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: self.managedObjectContext)
+        fetchRequest.entity = entityDescription
+        
+        
+        let predicate = NSPredicate(format:"title = '\(title)'")
+        fetchRequest.predicate = predicate
+        
+        do {
+            spotsArrayCopy = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        
+        for spot in spotsArrayCopy {
+            print(spot)
+        }
+        
+        return spotsArrayCopy
+        
+    }
+    
+    
+/*
+
+
+NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+NSEntityDescription *entity = [NSEntityDescription entityForName:@"<#Entity name#>" inManagedObjectContext:<#context#>];
+[fetchRequest setEntity:entity];
+// Specify criteria for filtering which objects to fetch
+NSPredicate *predicate = [NSPredicate predicateWithFormat:@"<#format string#>", <#arguments#>];
+[fetchRequest setPredicate:predicate];
+// Specify how the fetched objects should be sorted
+NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"<#key#>"
+ascending:YES];
+[fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
+
+NSError *error = nil;
+NSArray *fetchedObjects = [<#context#> executeFetchRequest:fetchRequest error:&error];
+if (fetchedObjects == nil) {
+    <#Error handling code#>
+}
+
+
+
+
+*/
+    
+    
     
 //---
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -79,11 +168,13 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     }
     
 
+    
+    
 //---
     func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
         let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
-
         self.privateSpots.append(managedSpot)
+        self.saveContext()
         
     }
     

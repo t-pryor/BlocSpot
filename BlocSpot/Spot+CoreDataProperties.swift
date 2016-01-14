@@ -32,17 +32,19 @@ extension Spot {
     
     convenience init(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Category ) {
         
-        //if let entity = NSEntityDescription.entityForName("Spot",
-          //  inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext) {
-                
-              //  self.init(entity: entity, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
-                self.init()
+        
+        let entity = NSEntityDescription.entityForName("Spot",
+            inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
+                    // do I need forced unwrapping here? Is there an alternative?
+                    // can't use if let as designated initializer not guaranteed to be called
+                self.init(entity: entity!, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
+
                 self.title = title
                 self.subtitle = subtitle ?? "No subtitle"
                 self.latitude = latitude ?? -1
                 self.longitude = longitude ?? -1
                 self.category = category
-     //   }
+        
 
     }
 

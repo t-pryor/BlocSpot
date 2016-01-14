@@ -15,6 +15,9 @@ class SpotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        let testSpot2 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot2", subtitle: "testsub2", latitude: 45, longitude: 45, category: .Restaurants)
+        let testSpot3 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot3", subtitle: "testsub3", latitude: 45, longitude: 45, category: .Restaurants)
+         LocationDataSource.sharedInstance.saveContext()
     }
     
     override func tearDown() {
@@ -22,20 +25,34 @@ class SpotTests: XCTestCase {
         super.tearDown()
     }
     
+ 
+    
+    
     
 //---
     func testCreatingSpot() {
         
        // let testSpot = Spot(title: "McDonalds", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
-        let testSpot = LocationDataSource.sharedInstance.createSpotWithTitle("McDonalds", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
+      let testSpot = LocationDataSource.sharedInstance.createSpotWithTitle("McDonalds", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
+        
+        
         
         print(LocationDataSource.sharedInstance.allSpots)
         
-        
-//        
-//        
-        
     }
+    
+
+//---
+    func testLoadingSpotsFromStore() {
+        
+        var results = [Spot]()
+        
+        let testFetchingSpot = LocationDataSource.sharedInstance.createSpotWithTitle("TestFetchingSpot", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
+        
+        results = LocationDataSource.sharedInstance.fetchSpotFromStoreWithTitle("TestFetchingSpot")
+        print(results)
+    }
+    
     
     
 //---
