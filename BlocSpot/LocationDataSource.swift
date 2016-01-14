@@ -51,30 +51,26 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
 //---
     func loadSpotsIntoStore() {
         
-        var spotsArrayCopy = [Spot]()
+        var spotsArrayFromCoreData = [Spot]()
         
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: self.managedObjectContext)
         fetchRequest.entity = entityDescription
         
         do {
-            let spotsArrayCopy = try self.managedObjectContext.executeFetchRequest(fetchRequest)
+             spotsArrayFromCoreData = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
     
         } catch {
             let fetchError = error as NSError
             print(fetchError)
         }
         
-        for spot in spotsArrayCopy {
+        for spot in spotsArrayFromCoreData {
             print(spot)
         }
         
-        self.privateSpots = spotsArrayCopy
-//
-//        dispatch_sync(self.concurrentSpotQueue) {
-//            spotsArrayCopy =
-//            
-//        }
+        self.privateSpots = spotsArrayFromCoreData
+
     }
 
 //---
