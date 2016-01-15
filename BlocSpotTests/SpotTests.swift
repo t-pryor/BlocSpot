@@ -33,33 +33,30 @@ class SpotTests: XCTestCase {
     func testCreatingSpot() {
         
        // let testSpot = Spot(title: "McDonalds", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
-      let testSpot = LocationDataSource.sharedInstance.createSpotWithTitle("McDonalds", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
+       LocationDataSource.sharedInstance.createSpotWithTitle("TestCreatingSpot", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
         
-        
-        
-        print(LocationDataSource.sharedInstance.allSpots)
+        XCTAssert(LocationDataSource.sharedInstance.allSpots.contains( { $0.title == "TestCreatingSpot" } ))
         
     }
     
 
 //---
-    func testLoadingSpotsFromStore() {
+    func testLoadingSpotsFromCoreData() {
         
         var results = [Spot]()
         
-        let testFetchingSpot = LocationDataSource.sharedInstance.createSpotWithTitle("TestFetchingSpot", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
+        LocationDataSource.sharedInstance.createSpotWithTitle("TestFetchingSpot", subtitle: "99 Billion Served", latitude: 45, longitude: 45, category: .Restaurants)
         
         results = LocationDataSource.sharedInstance.fetchSpotFromStoreWithTitle("TestFetchingSpot")
+        XCTAssert(results.contains( { $0.title == "TestFetchingSpot" } ))
+        
         print(results)
+        print(LocationDataSource.sharedInstance.allSpots)
     }
     
     
     
 //---
-    func testSavingPOI() {
-       
-        
-    }
     
     
 

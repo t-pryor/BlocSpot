@@ -13,9 +13,13 @@ import CoreLocation
 class LocationDataSource: NSObject, CLLocationManagerDelegate
 {
     
-    private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
+    // singleton
+    static let sharedInstance = LocationDataSource()
     
+    // Core Location variables
+    var locationManager = CLLocationManager()
     
+    // Spot
     private var privateSpots = [Spot]()
     
     var allSpots: [Spot] {
@@ -24,18 +28,14 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         dispatch_sync(self.concurrentSpotQueue) {
             spotsCopy = self.privateSpots
         }
-    
         return spotsCopy
     }
     
     
-    // singleton
-    static let sharedInstance = LocationDataSource()
-    var locationManager = CLLocationManager()
-  //  private var searchHistory = [SearchSpots]()
-
+    // Concurrency
+    private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
+    
     override init() {
-        
         super.init() // &*Investigate
         
         self.locationManager = CLLocationManager()
@@ -48,8 +48,11 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         
     }
     
+    
+// MARK: Spot Methods
+    
 //---
-    func loadSpotsIntoStore() {
+    func loadSpotsIntoDataSourceAtStartup() {
         
         var spotsArrayFromCoreData = [Spot]()
         
@@ -70,7 +73,6 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         }
         
         self.privateSpots = spotsArrayFromCoreData
-
     }
 
 //---
@@ -99,36 +101,18 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         }
         
         return spotsArrayCopy
-        
     }
     
+//---
+    func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
+        let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
+        self.privateSpots.append(managedSpot)
+        self.saveContext()
+        
+    }
+   
     
-/*
-
-
-NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-NSEntityDescription *entity = [NSEntityDescription entityForName:@"<#Entity name#>" inManagedObjectContext:<#context#>];
-[fetchRequest setEntity:entity];
-// Specify criteria for filtering which objects to fetch
-NSPredicate *predicate = [NSPredicate predicateWithFormat:@"<#format string#>", <#arguments#>];
-[fetchRequest setPredicate:predicate];
-// Specify how the fetched objects should be sorted
-NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"<#key#>"
-ascending:YES];
-[fetchRequest setSortDescriptors:[NSArray arrayWithObjects:sortDescriptor, nil]];
-
-NSError *error = nil;
-NSArray *fetchedObjects = [<#context#> executeFetchRequest:fetchRequest error:&error];
-if (fetchedObjects == nil) {
-    <#Error handling code#>
-}
-
-
-
-
-*/
-    
-    
+// MARK: - CLLocation Methods
     
 //---
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -163,21 +147,9 @@ if (fetchedObjects == nil) {
         }
     }
     
-
-    
-    
-//---
-    func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
-        let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
-        self.privateSpots.append(managedSpot)
-        self.saveContext()
-        
-    }
-    
-    
-
     
     // MARK: - Core Data stack
+    
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.example.BlocSpot" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
