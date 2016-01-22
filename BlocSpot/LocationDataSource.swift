@@ -35,7 +35,8 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     // Concurrency
     private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
     
-    override init() {
+    
+    override private init() {
         super.init() // &*Investigate
         
         self.locationManager = CLLocationManager()
@@ -110,6 +111,17 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         self.saveContext()
         
     }
+    
+    
+// MARK: - Search Methods
+    
+//---
+  //  func saveSearch() {
+        
+ //   }
+    
+//---
+    //func
    
     
 // MARK: - CLLocation Methods

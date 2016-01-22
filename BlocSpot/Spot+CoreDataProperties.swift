@@ -11,6 +11,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 extension Spot {
     
@@ -31,17 +32,29 @@ extension Spot {
 
     
     convenience init(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Category ) {
-        let entity = NSEntityDescription.entityForName("Spot",
-            inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
-                    // do I need forced unwrapping here? Is there an alternative?
-                    // can't use if let as designated initializer not guaranteed to be called
-        self.init(entity: entity!, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
-        self.title = title
-        self.subtitle = subtitle ?? "No subtitle"
-        self.latitude = latitude ?? -1
-        self.longitude = longitude ?? -1
-        self.category = category
-
+        if let entity = NSEntityDescription.entityForName("Spot",
+            inManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext) {
+            
+            // this is defined on NSManagedObject: see BNR, chap 17, Spot inherits superclass's designated initializers
+            self.init(entity: entity, insertIntoManagedObjectContext: LocationDataSource.sharedInstance.managedObjectContext)
+            self.title = title
+            self.subtitle = subtitle ?? "No subtitle"
+            self.latitude = latitude ?? -1
+            self.longitude = longitude ?? -1
+            self.category = category
+            
+        } else {
+            self.init()
+        }
     }
-
+    
+    
+    // should I do this here?
+    func convertToLatitudeAndLongitude(coordinates: CLLocationCoordinate2D) -> (Double, Double) {
+        let latitude = coordinates.latitude  // CLLocationDegrees is a Double
+        let longitude = coordinates.longitude
+        
+        return (latitude, longitude)
+    }
+    
 }

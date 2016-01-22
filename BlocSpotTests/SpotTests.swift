@@ -15,9 +15,12 @@ class SpotTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        let testSpot2 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot2", subtitle: "testsub2", latitude: 45, longitude: 45, category: .Restaurants)
-        let testSpot3 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot3", subtitle: "testsub3", latitude: 45, longitude: 45, category: .Restaurants)
-         LocationDataSource.sharedInstance.saveContext()
+//        let testSpot2 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot2", subtitle: "testsub2", latitude: 45, longitude: 45, category: .Restaurants)
+//        let testSpot3 = LocationDataSource.sharedInstance.createSpotWithTitle("TestSpot3", subtitle: "testsub3", latitude: 45, longitude: 45, category: .Restaurants)
+        // LocationDataSource.sharedInstance.saveContext()
+    
+        
+    
     }
     
     override func tearDown() {
@@ -25,7 +28,21 @@ class SpotTests: XCTestCase {
         super.tearDown()
     }
     
- 
+    
+//---
+    func testLocationDataSoureReturnsSingleton() {
+        
+        // test that there is only one instance of the LocationDataSource sharedInstance
+        let lds1 = LocationDataSource.sharedInstance
+        let lds2 = LocationDataSource.sharedInstance
+        
+        XCTAssertEqual(lds1, lds2)
+    }
+    
+    
+//---
+  //  func test
+    
     
     
     
