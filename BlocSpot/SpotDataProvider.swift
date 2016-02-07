@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import CoreLocation
 
-class LocationDataSource: NSObject, CLLocationManagerDelegate
+class LocationDataProvider: NSObject, CLLocationManagerDelegate
 {
     
     
@@ -56,9 +56,9 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     }
     
     
-    // MARK: Spot Methods
+// MARK: Spot Methods
     
-    //---
+//---
     func loadSpotsIntoDataSourceAtStartup() {
         
         var spotsArrayFromCoreData = [Spot]()
@@ -68,8 +68,8 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         fetchRequest.entity = entityDescription
         
         do {
-            spotsArrayFromCoreData = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
-            
+             spotsArrayFromCoreData = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
+    
         } catch {
             let fetchError = error as NSError
             print(fetchError)
@@ -81,8 +81,8 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         
         self.privateSpots = spotsArrayFromCoreData
     }
-    
-    //---
+
+//---
     func fetchSpotFromStoreWithTitle(title: String) -> [Spot] {
         
         var spotsArrayCopy = [Spot]()
@@ -110,7 +110,7 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         return spotsArrayCopy
     }
     
-    //---
+//---
     func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
         let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
         self.privateSpots.append(managedSpot)
@@ -119,20 +119,20 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     }
     
     
-    // MARK: - Search Methods
+// MARK: - Search Methods
     
-    //---
-    //  func saveSearch() {
+//---
+  //  func saveSearch() {
+        
+ //   }
     
-    //   }
-    
-    //---
+//---
     //func
+   
     
+// MARK: - CLLocation Methods
     
-    // MARK: - CLLocation Methods
-    
-    //---
+//---
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let newLocation = locations.last {
             //newLocation is most recent
@@ -155,7 +155,7 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         }
     }
     
-    //---
+//---
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         switch status {
         case .Authorized, .AuthorizedWhenInUse:
