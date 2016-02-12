@@ -59,7 +59,7 @@ class DataStoreTests: XCTestCase {
     func testRequestSpotsWithSearchQuery() {
         var dataStore = DataStore.sharedInstance
         
-        var error = NSError.self
+        //var error = NSError.self
         
         
         
@@ -74,7 +74,7 @@ class DataStoreTests: XCTestCase {
         expectation.fulfill()
         
         waitForExpectationsWithTimeout(10, handler: { (_) in
-            assert
+            //assert
         
         })
         

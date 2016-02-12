@@ -28,7 +28,7 @@
 		22D36EA41C66F21100718968 /* SpotListDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA31C66F21100718968 /* SpotListDataProvider.swift */; };
 		22D36EA71C66F28200718968 /* SpotListDataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA61C66F28200718968 /* SpotListDataProviderProtocol.swift */; };
 		22D36EA91C66F2E200718968 /* SpotInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA81C66F2E200718968 /* SpotInfo.swift */; };
-		22D36EAC1C68384500718968 /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EAB1C68384500718968 /* SearchMapViewController.swift */; };
+		22D36EAC1C68384500718968 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EAB1C68384500718968 /* MapViewController.swift */; };
 		22D36EB41C68F56700718968 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EB31C68F56700718968 /* DataStoreTests.swift */; };
 		22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */; };
 		22D36F1D1C6ADDBF00718968 /* SearchTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */; };
@@ -83,7 +83,7 @@
 		22D36EA31C66F21100718968 /* SpotListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotListDataProvider.swift; sourceTree = "<group>"; };
 		22D36EA61C66F28200718968 /* SpotListDataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotListDataProviderProtocol.swift; sourceTree = "<group>"; };
 		22D36EA81C66F2E200718968 /* SpotInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfo.swift; sourceTree = "<group>"; };
-		22D36EAB1C68384500718968 /* SearchMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapViewController.swift; sourceTree = "<group>"; };
+		22D36EAB1C68384500718968 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		22D36EB31C68F56700718968 /* DataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreTests.swift; sourceTree = "<group>"; };
 		22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQueryAndResultsInfo.swift; sourceTree = "<group>"; };
 		22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataProvider.swift; sourceTree = "<group>"; };
@@ -207,14 +207,6 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
-		22D36EAA1C6837AF00718968 /* SearchMapVC */ = {
-			isa = PBXGroup;
-			children = (
-				22D36EAB1C68384500718968 /* SearchMapViewController.swift */,
-			);
-			name = SearchMapVC;
-			sourceTree = "<group>";
-		};
 		22D36EAD1C68CC8900718968 /* SearchTableVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				22D36F2F1C6E1CD500718968 /* Search */,
+				22D36F321C6E40CE00718968 /* MapVC */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -291,10 +284,17 @@
 			isa = PBXGroup;
 			children = (
 				22D36EAD1C68CC8900718968 /* SearchTableVC */,
-				22D36EAA1C6837AF00718968 /* SearchMapVC */,
 				22D36EA01C66F08A00718968 /* SearchListVC */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		22D36F321C6E40CE00718968 /* MapVC */ = {
+			isa = PBXGroup;
+			children = (
+				22D36EAB1C68384500718968 /* MapViewController.swift */,
+			);
+			name = MapVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,7 +452,7 @@
 				22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */,
 				22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */,
 				22D36E9F1C66EDB100718968 /* Constants.swift in Sources */,
-				22D36EAC1C68384500718968 /* SearchMapViewController.swift in Sources */,
+				22D36EAC1C68384500718968 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
