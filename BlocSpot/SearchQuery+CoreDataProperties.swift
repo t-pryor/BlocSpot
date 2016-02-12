@@ -1,8 +1,8 @@
 //
-//  Spot+CoreDataProperties.swift
+//  SearchQuery+CoreDataProperties.swift
 //  BlocSpot
 //
-//  Created by Tim Pryor on 2016-02-09.
+//  Created by Tim Pryor on 2016-02-10.
 //  Copyright © 2016 Tim Pryor. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,11 +12,9 @@
 import Foundation
 import CoreData
 
-extension Spot {
+extension SearchQuery {
 
-    @NSManaged var latitude: NSNumber?
-    @NSManaged var longitude: NSNumber?
-    @NSManaged var phoneNumber: String?
-    @NSManaged var name: String?
+    @NSManaged var query: String?
+    @NSManaged var results: NSObject?
 
 }

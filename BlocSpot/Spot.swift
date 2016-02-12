@@ -8,11 +8,17 @@
 
 import Foundation
 import CoreData
-
+import MapKit
 
 class Spot: NSManagedObject {
 
 // Insert code here to add functionality to your managed object subclass
 
+    static func convertPlacemarkCoordinatesToLatitudeAndLongitude(placemark: MKPlacemark) -> (Double, Double) {
+        let latitude = placemark.coordinate.latitude
+        let longitude = placemark.coordinate.longitude
+        
+        return (latitude, longitude)
+    }
     
 }

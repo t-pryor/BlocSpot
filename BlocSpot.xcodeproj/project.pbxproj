@@ -16,17 +16,25 @@
 		2294D4111C3DA2DF004328A3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2294D40F1C3DA2DF004328A3 /* LaunchScreen.storyboard */; };
 		2294D41C1C3DA2DF004328A3 /* BlocSpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D41B1C3DA2DF004328A3 /* BlocSpotTests.swift */; };
 		2294D4271C3DA2DF004328A3 /* BlocSpotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4261C3DA2DF004328A3 /* BlocSpotUITests.swift */; };
-		2294D4771C3DA38F004328A3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4761C3DA38F004328A3 /* MainViewController.swift */; };
 		2294D4821C3EEF57004328A3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2294D4811C3EEF57004328A3 /* MapKit.framework */; };
 		2294D48A1C4027D8004328A3 /* SearchSpotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */; };
 		22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */; };
 		22B812741C4732CD00252FC5 /* Spot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B812721C4732CD00252FC5 /* Spot.swift */; };
 		22B963A61C4EDCD600AFF4F4 /* LocationCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B963A51C4EDCD600AFF4F4 /* LocationCollectionViewController.swift */; };
 		22B963AC1C5063C900AFF4F4 /* LocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B963AB1C5063C900AFF4F4 /* LocationCollectionViewCell.swift */; };
-		22D36E9D1C66EAB000718968 /* LocationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36E9C1C66EAB000718968 /* LocationDataSource.swift */; };
+		22D36E9D1C66EAB000718968 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36E9C1C66EAB000718968 /* DataStore.swift */; };
+		22D36E9F1C66EDB100718968 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36E9E1C66EDB100718968 /* Constants.swift */; };
+		22D36EA21C66F0C500718968 /* SpotListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA11C66F0C500718968 /* SpotListViewController.swift */; };
+		22D36EA41C66F21100718968 /* SpotListDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA31C66F21100718968 /* SpotListDataProvider.swift */; };
+		22D36EA71C66F28200718968 /* SpotListDataProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA61C66F28200718968 /* SpotListDataProviderProtocol.swift */; };
+		22D36EA91C66F2E200718968 /* SpotInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EA81C66F2E200718968 /* SpotInfo.swift */; };
+		22D36EAC1C68384500718968 /* SearchMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EAB1C68384500718968 /* SearchMapViewController.swift */; };
+		22D36EB41C68F56700718968 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EB31C68F56700718968 /* DataStoreTests.swift */; };
+		22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */; };
+		22D36F1D1C6ADDBF00718968 /* SearchTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */; };
+		22D36F2B1C6C303500718968 /* SearchQuery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F291C6C303500718968 /* SearchQuery+CoreDataProperties.swift */; };
+		22D36F2C1C6C303500718968 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F2A1C6C303500718968 /* SearchQuery.swift */; };
 		22E8F2AF1C46F16B004E0906 /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8F2AE1C46F16B004E0906 /* SpotTests.swift */; };
-		22F1AC241C5152B300AE0263 /* PreviousSearches+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F1AC221C5152B300AE0263 /* PreviousSearches+CoreDataProperties.swift */; };
-		22F1AC251C5152B300AE0263 /* PreviousSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F1AC231C5152B300AE0263 /* PreviousSearches.swift */; };
 		22F1AC271C51580800AE0263 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F1AC261C51580800AE0263 /* SearchTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,17 +71,25 @@
 		2294D4221C3DA2DF004328A3 /* BlocSpotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocSpotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2294D4261C3DA2DF004328A3 /* BlocSpotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlocSpotUITests.swift; sourceTree = "<group>"; };
 		2294D4281C3DA2DF004328A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2294D4761C3DA38F004328A3 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		2294D4811C3EEF57004328A3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSpotsTests.swift; sourceTree = "<group>"; };
 		22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Spot+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		22B812721C4732CD00252FC5 /* Spot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Spot.swift; sourceTree = "<group>"; };
 		22B963A51C4EDCD600AFF4F4 /* LocationCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewController.swift; sourceTree = "<group>"; };
 		22B963AB1C5063C900AFF4F4 /* LocationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCollectionViewCell.swift; sourceTree = "<group>"; };
-		22D36E9C1C66EAB000718968 /* LocationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationDataSource.swift; sourceTree = "<group>"; };
+		22D36E9C1C66EAB000718968 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		22D36E9E1C66EDB100718968 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		22D36EA11C66F0C500718968 /* SpotListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotListViewController.swift; sourceTree = "<group>"; };
+		22D36EA31C66F21100718968 /* SpotListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotListDataProvider.swift; sourceTree = "<group>"; };
+		22D36EA61C66F28200718968 /* SpotListDataProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotListDataProviderProtocol.swift; sourceTree = "<group>"; };
+		22D36EA81C66F2E200718968 /* SpotInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotInfo.swift; sourceTree = "<group>"; };
+		22D36EAB1C68384500718968 /* SearchMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMapViewController.swift; sourceTree = "<group>"; };
+		22D36EB31C68F56700718968 /* DataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreTests.swift; sourceTree = "<group>"; };
+		22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQueryAndResultsInfo.swift; sourceTree = "<group>"; };
+		22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataProvider.swift; sourceTree = "<group>"; };
+		22D36F291C6C303500718968 /* SearchQuery+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchQuery+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		22D36F2A1C6C303500718968 /* SearchQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
 		22E8F2AE1C46F16B004E0906 /* SpotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
-		22F1AC221C5152B300AE0263 /* PreviousSearches+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PreviousSearches+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		22F1AC231C5152B300AE0263 /* PreviousSearches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviousSearches.swift; sourceTree = "<group>"; };
 		22F1AC261C51580800AE0263 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +124,7 @@
 			children = (
 				2294D4811C3EEF57004328A3 /* MapKit.framework */,
 				2294D4021C3DA2DF004328A3 /* BlocSpot */,
+				22D36EAF1C68CDCB00718968 /* GPX files */,
 				2294D41A1C3DA2DF004328A3 /* BlocSpotTests */,
 				2294D4251C3DA2DF004328A3 /* BlocSpotUITests */,
 				2294D4011C3DA2DF004328A3 /* Products */,
@@ -127,18 +144,15 @@
 		2294D4021C3DA2DF004328A3 /* BlocSpot */ = {
 			isa = PBXGroup;
 			children = (
+				22D36F2E1C6E1C9C00718968 /* Controllers */,
 				2294D4781C3DA398004328A3 /* Model */,
+				22D36EA51C66F23500718968 /* Store */,
 				2294D4031C3DA2DF004328A3 /* AppDelegate.swift */,
 				2294D4071C3DA2DF004328A3 /* Main.storyboard */,
 				2294D40D1C3DA2DF004328A3 /* Assets.xcassets */,
 				2294D40F1C3DA2DF004328A3 /* LaunchScreen.storyboard */,
 				2294D4121C3DA2DF004328A3 /* Info.plist */,
-				2294D4761C3DA38F004328A3 /* MainViewController.swift */,
-				2243416F1C442E8800197DE8 /* DMNS.gpx */,
-				224341701C442E8800197DE8 /* Denver Art Museum.gpx */,
-				22B963A51C4EDCD600AFF4F4 /* LocationCollectionViewController.swift */,
-				22B963AB1C5063C900AFF4F4 /* LocationCollectionViewCell.swift */,
-				22F1AC261C51580800AE0263 /* SearchTableViewController.swift */,
+				22D36EAE1C68CCAD00718968 /* Supporting Files */,
 			);
 			path = BlocSpot;
 			sourceTree = "<group>";
@@ -146,6 +160,9 @@
 		2294D41A1C3DA2DF004328A3 /* BlocSpotTests */ = {
 			isa = PBXGroup;
 			children = (
+				22D36EB11C68F51300718968 /* View Controller Tests */,
+				22D36EB21C68F53400718968 /* Store Tests */,
+				22D36EB01C68F4FB00718968 /* Model Tests */,
 				2294D4891C4027D8004328A3 /* SearchSpotsTests.swift */,
 				2294D41B1C3DA2DF004328A3 /* BlocSpotTests.swift */,
 				2294D41D1C3DA2DF004328A3 /* Info.plist */,
@@ -166,14 +183,118 @@
 		2294D4781C3DA398004328A3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				22D36E9C1C66EAB000718968 /* LocationDataSource.swift */,
-				22F1AC221C5152B300AE0263 /* PreviousSearches+CoreDataProperties.swift */,
-				22F1AC231C5152B300AE0263 /* PreviousSearches.swift */,
-				22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */,
-				22B812721C4732CD00252FC5 /* Spot.swift */,
+				22D36F2D1C6E1C3F00718968 /* Search */,
 				2294D40A1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		22D36EA01C66F08A00718968 /* SearchListVC */ = {
+			isa = PBXGroup;
+			children = (
+				22D36EA11C66F0C500718968 /* SpotListViewController.swift */,
+				22D36EA31C66F21100718968 /* SpotListDataProvider.swift */,
+				22D36EA61C66F28200718968 /* SpotListDataProviderProtocol.swift */,
+			);
+			name = SearchListVC;
+			sourceTree = "<group>";
+		};
+		22D36EA51C66F23500718968 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				22D36E9C1C66EAB000718968 /* DataStore.swift */,
+			);
+			name = Store;
+			sourceTree = "<group>";
+		};
+		22D36EAA1C6837AF00718968 /* SearchMapVC */ = {
+			isa = PBXGroup;
+			children = (
+				22D36EAB1C68384500718968 /* SearchMapViewController.swift */,
+			);
+			name = SearchMapVC;
+			sourceTree = "<group>";
+		};
+		22D36EAD1C68CC8900718968 /* SearchTableVC */ = {
+			isa = PBXGroup;
+			children = (
+				22F1AC261C51580800AE0263 /* SearchTableViewController.swift */,
+				22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */,
+			);
+			name = SearchTableVC;
+			sourceTree = "<group>";
+		};
+		22D36EAE1C68CCAD00718968 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				22D36E9E1C66EDB100718968 /* Constants.swift */,
+				22B963A51C4EDCD600AFF4F4 /* LocationCollectionViewController.swift */,
+				22B963AB1C5063C900AFF4F4 /* LocationCollectionViewCell.swift */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22D36EAF1C68CDCB00718968 /* GPX files */ = {
+			isa = PBXGroup;
+			children = (
+				2243416F1C442E8800197DE8 /* DMNS.gpx */,
+				224341701C442E8800197DE8 /* Denver Art Museum.gpx */,
+			);
+			name = "GPX files";
+			path = BlocSpot;
+			sourceTree = "<group>";
+		};
+		22D36EB01C68F4FB00718968 /* Model Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Model Tests";
+			sourceTree = "<group>";
+		};
+		22D36EB11C68F51300718968 /* View Controller Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Controller Tests";
+			sourceTree = "<group>";
+		};
+		22D36EB21C68F53400718968 /* Store Tests */ = {
+			isa = PBXGroup;
+			children = (
+				22D36EB31C68F56700718968 /* DataStoreTests.swift */,
+			);
+			name = "Store Tests";
+			sourceTree = "<group>";
+		};
+		22D36F2D1C6E1C3F00718968 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */,
+				22D36EA81C66F2E200718968 /* SpotInfo.swift */,
+				22B812721C4732CD00252FC5 /* Spot.swift */,
+				22B812711C4732CD00252FC5 /* Spot+CoreDataProperties.swift */,
+				22D36F291C6C303500718968 /* SearchQuery+CoreDataProperties.swift */,
+				22D36F2A1C6C303500718968 /* SearchQuery.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		22D36F2E1C6E1C9C00718968 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				22D36F2F1C6E1CD500718968 /* Search */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		22D36F2F1C6E1CD500718968 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				22D36EAD1C68CC8900718968 /* SearchTableVC */,
+				22D36EAA1C6837AF00718968 /* SearchMapVC */,
+				22D36EA01C66F08A00718968 /* SearchListVC */,
+			);
+			name = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -315,16 +436,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B963A61C4EDCD600AFF4F4 /* LocationCollectionViewController.swift in Sources */,
+				22D36EA21C66F0C500718968 /* SpotListViewController.swift in Sources */,
+				22D36EA41C66F21100718968 /* SpotListDataProvider.swift in Sources */,
 				22B963AC1C5063C900AFF4F4 /* LocationCollectionViewCell.swift in Sources */,
-				22F1AC251C5152B300AE0263 /* PreviousSearches.swift in Sources */,
-				2294D4771C3DA38F004328A3 /* MainViewController.swift in Sources */,
+				22D36EA91C66F2E200718968 /* SpotInfo.swift in Sources */,
 				2294D40C1C3DA2DF004328A3 /* BlocSpot.xcdatamodeld in Sources */,
+				22D36EA71C66F28200718968 /* SpotListDataProviderProtocol.swift in Sources */,
+				22D36F2B1C6C303500718968 /* SearchQuery+CoreDataProperties.swift in Sources */,
+				22D36F2C1C6C303500718968 /* SearchQuery.swift in Sources */,
 				2294D4041C3DA2DF004328A3 /* AppDelegate.swift in Sources */,
-				22F1AC241C5152B300AE0263 /* PreviousSearches+CoreDataProperties.swift in Sources */,
 				22F1AC271C51580800AE0263 /* SearchTableViewController.swift in Sources */,
 				22B812741C4732CD00252FC5 /* Spot.swift in Sources */,
-				22D36E9D1C66EAB000718968 /* LocationDataSource.swift in Sources */,
+				22D36E9D1C66EAB000718968 /* DataStore.swift in Sources */,
+				22D36F1D1C6ADDBF00718968 /* SearchTableDataProvider.swift in Sources */,
 				22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */,
+				22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */,
+				22D36E9F1C66EDB100718968 /* Constants.swift in Sources */,
+				22D36EAC1C68384500718968 /* SearchMapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2294D41C1C3DA2DF004328A3 /* BlocSpotTests.swift in Sources */,
+				22D36EB41C68F56700718968 /* DataStoreTests.swift in Sources */,
 				2294D48A1C4027D8004328A3 /* SearchSpotsTests.swift in Sources */,
 				22E8F2AF1C46F16B004E0906 /* SpotTests.swift in Sources */,
 			);

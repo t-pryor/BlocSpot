@@ -1,5 +1,5 @@
 //
-//  LocationDataSource.swift
+//  DataStore.swift
 //  BlocSpot
 //
 //  Created by Tim Pryor on 2016-01-06.
@@ -9,19 +9,22 @@
 import UIKit
 import CoreData
 import CoreLocation
+import MapKit
 
-class LocationDataSource: NSObject, CLLocationManagerDelegate
+
+class DataStore: NSObject, CLLocationManagerDelegate
 {
     
     // singleton
-    static let sharedInstance = LocationDataSource()
+    static let sharedInstance = DataStore()
     
-    // Core Location variables
+
+    // variable used to back ..
+    var _fetchedResultsController: NSFetchedResultsController? = nil
+    
     var locationManager = CLLocationManager()
     
-    // Spot
     private var privateSpots = [Spot]()
-    
     var allSpots: [Spot] {
         var spotsCopy = [Spot]()
         
@@ -30,6 +33,11 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         }
         return spotsCopy
     }
+    
+    // FIXME: change from implicitly unwrapped
+    var region = MKCoordinateRegion!()
+    private var currentSearch = MKLocalSearch!()
+    var currentSearchQueryAndResults: SearchQueryAndResults? = nil
     
     
     // Concurrency
@@ -48,9 +56,103 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         self.locationManager.requestWhenInUseAuthorization()
         
     }
+
+    /*
+    
+    // MARK: Get Spot Data
+    
+    func fetchAllSavedSpots() {  // pass an NSFetchRequest?
+        var fetchedSpots = [Spot]()
+        
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: managedObjectContext)
+        fetchRequest.entity = entityDescription
+        
+        do {
+            fetchedSpots = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+        }
+        
+        for spot in fetchedSpots {
+            print(spot)
+        }
+        
+        self.privateSpots = fetchedSpots
+        
+        NSNotificationCenter.defaultCenter()
+    }
     
     
-    // MARK: Spot Methods
+   */
+    
+    // MARK: Save Spot Data
+    
+    func saveSpot(spotInfo: SpotInfo) { // completion handler?
+        //let context = fetchedResultsController.mana
+        
+        let entity = NSEntityDescription.entityForName("Spot", inManagedObjectContext: managedObjectContext)
+        let spot =  NSEntityDescription.insertNewObjectForEntityForName(entity!.name!, inManagedObjectContext: managedObjectContext) as! Spot
+        
+        spot.name = spotInfo.name
+        spot.phoneNumber = spotInfo.phoneNumber
+        spot.latitude = spotInfo.latitude
+        spot.longitude = spotInfo.longitude
+    
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    func requestSpotsWithSearchQuery(inout search: SearchQueryAndResults, completionClosure: (error: NSError) -> ()) {
+        
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = search.query
+        request.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(0, 0), 10000, 10000)
+        
+        currentSearch = MKLocalSearch(request: request)
+        currentSearch.startWithCompletionHandler { (response, error) in
+            
+            guard response != nil else {
+                print("Search error: \(error)")
+                return
+            }
+            
+            // create array to store placemarks returned by search
+            var tempSpotInfos = Array<SpotInfo>()
+            
+            for item in response!.mapItems {
+                let name = item.name
+                let phoneNumber = item.phoneNumber
+                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
+                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
+                tempSpotInfos.append(tempSpotInfo)
+            }
+            
+            search.searchSpotsResults = tempSpotInfos
+            print("-----------------in startWithCompletionHandler")
+            self.currentSearchQueryAndResults = search
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("New Search Completed", object: self)
+    }
+    
+    
+    
+    
+    // MARK: Category data
+    
+    
+    
+    
+    
+    
+    
+    
     
     //---
     func loadSpotsIntoDataSourceAtStartup() {
@@ -105,14 +207,14 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     }
     
     //---
-    func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
-        let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
-        self.privateSpots.append(managedSpot)
-        self.saveContext()
-        
-    }
-    
-    
+//    func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
+//        let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
+//        self.privateSpots.append(managedSpot)
+//        self.saveContext()
+//        
+//    }
+//    
+//    
     // MARK: - Search Methods
     
     //---
@@ -160,17 +262,18 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
     }
     
     
-    // MARK: - Core Data stack
     
+    
+    // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: NSURL = {
-        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.example.BlocSpot" in the application's documents Application Support directory.
+        // The directory the application uses to store the Core Data store file. This code uses a directory named "com.example.ExampleCoreDataios9" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1]
     }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("BlocSpot", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("ExampleCoreDataios9", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
     }()
     
@@ -223,3 +326,8 @@ class LocationDataSource: NSObject, CLLocationManagerDelegate
         }
     }
 }
+
+
+
+    
+    

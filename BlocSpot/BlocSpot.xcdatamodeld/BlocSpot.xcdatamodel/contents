@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
-    <entity name="PreviousSearches" representedClassName=".PreviousSearches" syncable="YES">
-        <attribute name="keyword" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="SearchQuery" representedClassName=".SearchQuery" syncable="YES">
+        <attribute name="query" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="results" optional="YES" toMany="YES" deletionRule="No Action" destinationEntity="Spot" inverseName="query" inverseEntity="Spot" syncable="YES"/>
     </entity>
     <entity name="Spot" representedClassName=".Spot" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="subtitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" minValueString="-90" maxValueString="90" defaultValueString="0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" minValueString="-180" maxValueString="180" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="query" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="SearchQuery" inverseName="results" inverseEntity="SearchQuery" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PreviousSearches" positionX="-54" positionY="18" width="128" height="60"/>
-        <element name="Spot" positionX="-396" positionY="-90" width="128" height="118"/>
+        <element name="Spot" positionX="-479" positionY="-99" width="128" height="118"/>
+        <element name="SearchQuery" positionX="-713" positionY="-225" width="128" height="73"/>
     </elements>
 </model>

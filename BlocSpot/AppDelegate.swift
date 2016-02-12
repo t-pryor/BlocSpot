@@ -18,7 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-       // LocationDataSource.sharedInstance.loadSpotsIntoStore()
+        let tabBarController = self.window!.rootViewController as! UITabBarController
+        print(tabBarController.viewControllers)
+        let mapNavigationController = tabBarController.viewControllers!.first as! UINavigationController
+        let listNavigationController = tabBarController.viewControllers!.last as! UINavigationController
+        
+        let mapViewController = mapNavigationController.topViewController
+        let listViewController = listNavigationController.topViewController
+        
+        
+        //let dataStore = K.store
+        
+        let attributes = [NSFontAttributeName:UIFont(name: "Helvetica Neue", size: 15)!, NSForegroundColorAttributeName:UIColor.blackColor()]
+        UIBarButtonItem.appearance().setTitleTextAttributes( attributes, forState: UIControlState.Normal)
+        
         
         return true
     }
@@ -32,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        LocationDataSource.sharedInstance.saveContext()
+        K.store.saveContext()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -48,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         //self.saveContext()
         
-        LocationDataSource.sharedInstance.saveContext()
+        K.store.saveContext()
     
     }
 
