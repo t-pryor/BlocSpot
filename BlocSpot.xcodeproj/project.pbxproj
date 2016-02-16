@@ -264,7 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				22D36F321C6E40CE00718968 /* MapVC */,
-				22D36F5B1C738A3800718968 /* LocationSearchTable */,
+				22D36F5B1C738A3800718968 /* LocationSearchTableVC */,
 				22D36F2F1C6E1CD500718968 /* Search */,
 			);
 			name = Controllers;
@@ -286,12 +286,12 @@
 			name = MapVC;
 			sourceTree = "<group>";
 		};
-		22D36F5B1C738A3800718968 /* LocationSearchTable */ = {
+		22D36F5B1C738A3800718968 /* LocationSearchTableVC */ = {
 			isa = PBXGroup;
 			children = (
 				22D36F591C738A3200718968 /* LocationSearchTable.swift */,
 			);
-			name = LocationSearchTable;
+			name = LocationSearchTableVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

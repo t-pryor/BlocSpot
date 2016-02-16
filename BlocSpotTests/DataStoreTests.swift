@@ -56,35 +56,35 @@ class DataStoreTests: XCTestCase {
         })
     }
     
-    func testRequestSpotsWithSearchQuery() {
-        var dataStore = DataStore.sharedInstance
-        
-        //var error = NSError.self
-        
-        
-        
-        let expectation = expectationWithDescription("Testing asychronous search")
-        
-        
-        var testSearch = SearchQueryAndResults(query: "McDonalds", searchSpotsResults: [])
-        dataStore.requestSpotsWithSearchQuery(&testSearch) { _ in
-            
-        }
-        
-        expectation.fulfill()
-        
-        waitForExpectationsWithTimeout(10, handler: { (_) in
-            //assert
-        
-        })
-        
-        
-        print(testSearch)
-    
-    XCTAssertTrue(!testSearch.searchSpotsResults.isEmpty)
-    
-    
-    }
+//    func testRequestSpotsWithSearchQuery() {
+//        var dataStore = DataStore.sharedInstance
+//        
+//        //var error = NSError.self
+//        
+//        
+//        
+//        let expectation = expectationWithDescription("Testing asychronous search")
+//        
+//        
+//        var testSearch = SearchQueryAndResults(query: "McDonalds", searchSpotsResults: [])
+//        dataStore.requestSpotsWithSearchQuery(&testSearch) { _ in
+//            
+//        }
+//        
+//        expectation.fulfill()
+//        
+//        waitForExpectationsWithTimeout(10, handler: { (_) in
+//            //assert
+//        
+//        })
+//        
+//        
+//        print(testSearch)
+//    
+//    XCTAssertTrue(!testSearch.searchSpotsResults.isEmpty)
+//    
+//    
+//    }
     
     
     

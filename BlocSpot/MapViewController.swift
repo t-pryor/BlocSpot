@@ -19,7 +19,7 @@ class MapViewController: UIViewController {
     var searchResults = MKLocalSearchResponse()
     
     // controller-level scope to keep UISearchController in mem after it's created
-    var resultSearchController: UISearchController? = nil
+    var searchResultsController: UISearchController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,13 +27,13 @@ class MapViewController: UIViewController {
       //  setupSearchController()
         
         let locationSearchTable = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchTable") as! LocationSearchTable
-        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
-        resultSearchController?.searchResultsUpdater = locationSearchTable
+        searchResultsController = UISearchController(searchResultsController: locationSearchTable)
+        searchResultsController?.searchResultsUpdater = locationSearchTable
         
-        let searchBar = resultSearchController!.searchBar
+        let searchBar = searchResultsController!.searchBar
         searchBar.sizeToFit()
         searchBar.placeholder = "Search for places"
-        navigationItem.titleView = resultSearchController?.searchBar
+        navigationItem.titleView = searchResultsController?.searchBar
         
         self.definesPresentationContext = true
         
@@ -50,14 +50,12 @@ class MapViewController: UIViewController {
         }
         
         // determines whether the Navigation Bar disappears when the search results are shown
-        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        searchResultsController?.hidesNavigationBarDuringPresentation = false
         // gives the modal overlay a semi-transparent background when the search bar is selected
-        resultSearchController?.dimsBackgroundDuringPresentation = true
+        searchResultsController?.dimsBackgroundDuringPresentation = true
         //limits the overlap area to just the VC's frame instead of the whole nav controller
         definesPresentationContext = true
         
-        
-       // self.initializeSearchController()
         
     }
     
@@ -65,14 +63,10 @@ class MapViewController: UIViewController {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
         mapView.setRegion(coordinateRegion, animated:true)
     }
-    
-    
-    
 }
 
 
 extension MapViewController: UISearchBarDelegate, UISearchControllerDelegate/*, UISearchResultsUpdating*/ {
-    
     
     func setupSearchController() {
         
@@ -98,31 +92,7 @@ extension MapViewController: UISearchBarDelegate, UISearchControllerDelegate/*, 
         
 
     }
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        if !searchText.isEmpty {
-            if let searchResults = K.store.searchQuery(searchText, region: mapView.region) {
-                self.searchResults = searchResults
-            } else {
-                
-            }
-        }
-    }
-    
-    func willPresentSearchController(searchController: UISearchController) {
-        print("in willPresentSC-----------")
-    }
-    
-    
-    
-    
-//    func updateSearchResultsForSearchController(searchController: UISearchController) {
-//        var searchString = searchController.searchBar.text
-//        
-//    }
-    
-//    func searchForText(searchText: String)
-    
+
 }
     
 extension MapViewController: UITableViewDelegate, UITableViewDataSource {
@@ -147,11 +117,8 @@ extension MapViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
-    /*
-The Map View Delegate is responsible for managing annotations. You’ll be using delegate methods to customize pins and callouts later on.
+ // responsible for managing annotations
 
-*/
     
 }
 

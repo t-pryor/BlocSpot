@@ -33,17 +33,18 @@ class DataStore: NSObject {
         return spotsCopy
     }
     
-    // FIXME: change from implicitly unwrapped
-    var region = MKCoordinateRegion!()
-    private var currentMKLocalSearch = MKLocalSearch!()
+    // can't initialize with nil request
+    // private var currentMKLocalSearch = MKLocalSearch()
     
-    
-    var currentSearchQueryAndResults: SearchQueryAndResults? = nil
+    // should we use implicitly unwrapped or
+    private var currentMKLocalSearch: MKLocalSearch!
+    // private var currentMKLocalSearch: MKLocalSearch? = nil  // then we have to constantly unwrap
     
     
     // Concurrency
     private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
-
+    private let concurrentSearchQueue = dispatch_queue_create("com.example.searchQueue", DISPATCH_QUEUE_CONCURRENT)
+    
     func setUpLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -52,99 +53,38 @@ class DataStore: NSObject {
         locationManager.requestWhenInUseAuthorization()
     }
     
-
     
-    
-    
-    
-    
-    
-    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
-        
-        // Cancel any previous searches
-        currentMKLocalSearch.cancel()
-        
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = query
-        request.region = region
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        currentMKLocalSearch = MKLocalSearch(request: request)
-        
-        var responseCopy: MKLocalSearchResponse? = nil
-        
-        
-        dispatch_sync(concurrentSpotQueue) {
-            self.currentMKLocalSearch.startWithCompletionHandler { (response, error) in
-                guard response != nil else {
-                    print("Search error: \(error)")
-                    return
-                }
-                
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                
-    //            var tempSpotInfos = Array<SpotInfo>()
-    //            
-    //            for item in response!.mapItems {
-    //                let name = item.name
-    //                let phoneNumber = item.phoneNumber
-    //                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
-    //                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
-    //                tempSpotInfos.append(tempSpotInfo)
-    //                
-    //            }
-                
-                responseCopy = response
-            }
-        }
-        
-        return responseCopy
-    }
-    
-//    
-//    func requestSpotsWithSearchQuery(inout search: SearchQueryAndResults, completionClosure: (error: NSError) -> ()) {
-//        let request = MKLocalSearchRequest()
-//        request.naturalLanguageQuery = search.query
-//       // request.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(0, 0), 10000, 10000)
+//    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
 //        
+//        // Cancel any previous searches
+//        currentMKLocalSearch.cancel()
+//        
+//        let request = MKLocalSearchRequest()
+//        request.naturalLanguageQuery = query
+//        request.region = region
+//        
+//        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 //        currentMKLocalSearch = MKLocalSearch(request: request)
-//        currentMKLocalSearch.startWithCompletionHandler { (response, error) in
-//            
-//            guard response != nil else {
-//                print("Search error: \(error)")
-//                return
+//        
+//        var responseCopy: MKLocalSearchResponse? = nil
+//        
+//        //&* concurrentSearchQueue, could it be declared locally
+//        dispatch_sync(concurrentSearchQueue) {
+//            self.currentMKLocalSearch.startWithCompletionHandler { (response, error) in
+//                guard response != nil else {
+//                    print("Search error: \(error)")
+//                    return
+//                }
+//                
+//                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+//                responseCopy = response
 //            }
-//            
-//            // create array to store placemarks returned by search
-//            var tempSpotInfos = Array<SpotInfo>()
-//            
-//            for item in response!.mapItems {
-//                let name = item.name
-//                let phoneNumber = item.phoneNumber
-//                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
-//                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
-//                tempSpotInfos.append(tempSpotInfo)
-//            }
-//            
-//            search.searchSpotsResults = tempSpotInfos
-//            print("-----------------in startWithCompletionHandler")
-//            self.currentSearchQueryAndResults = search
 //        }
 //        
-//        NSNotificationCenter.defaultCenter().postNotificationName("New Search Completed", object: self)
+//        return responseCopy
 //    }
     
-    
 
-
-    
-    
-    
-
-    
-    
-    
-    
     
     // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: NSURL = {
@@ -215,30 +155,13 @@ extension DataStore: CLLocationManagerDelegate {
         
         // locationManager.desiredAccuracy = kCLLocationAccuracyBest
         // locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.startUpdatingLocation()
+        locationManager.requestLocation()
         
-        let location = locationManager.location
-        //        var coord = CLLocationCoordinate2D()
-        //
-        //        guard location != nil else {
-        //            return nil
-        //        }
-        //
-        //        coord.longitude = location!.coordinate.longitude
-        //        coord.latitude = location!.coordinate.latitude
-        
-        return location
+        return locationManager.location
     }
 
     
-    
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-//        switch status {
-//        case .Authorized, .AuthorizedWhenInUse:
-//            locationManager.startUpdatingLocation()
-//        default:
-//            locationManager.stopUpdatingLocation()
-//        }
         
         if status == .AuthorizedWhenInUse {
             locationManager.requestLocation() // new for iOS9
@@ -246,33 +169,13 @@ extension DataStore: CLLocationManagerDelegate {
 
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        if let newLocation = locations.last {
-//            //newLocation is most recent
-//            //extract data to feed to GUI
-//            // could return first if need to filter out
-//            
-//            
-//            if newLocation.horizontalAccuracy < 0 {
-//                // invalid accuracy
-//                return
-//            }
-//            
-//            // numbers in meters
-//            if newLocation.horizontalAccuracy > 100 ||
-//                newLocation.verticalAccuracy > 50 {
-//                    // accuracy radius is so large, we don't want to use it
-//                    return
-//            }
-//            
-//        }
-
     
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             print("location:: \(location)")
         }
-    
     }
+    
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("error:: \(error)")
