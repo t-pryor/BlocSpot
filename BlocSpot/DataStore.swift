@@ -12,8 +12,7 @@ import CoreLocation
 import MapKit
 
 
-class DataStore: NSObject, CLLocationManagerDelegate
-{
+class DataStore: NSObject {
     
     // singleton
     static let sharedInstance = DataStore()
@@ -36,230 +35,113 @@ class DataStore: NSObject, CLLocationManagerDelegate
     
     // FIXME: change from implicitly unwrapped
     var region = MKCoordinateRegion!()
-    private var currentSearch = MKLocalSearch!()
+    private var currentMKLocalSearch = MKLocalSearch!()
+    
+    
     var currentSearchQueryAndResults: SearchQueryAndResults? = nil
     
     
     // Concurrency
     private let concurrentSpotQueue = dispatch_queue_create("com.example.spotQueue", DISPATCH_QUEUE_CONCURRENT)
-    
-    
-    override private init() {
-        super.init() // &*Investigate
-        
-        self.locationManager = CLLocationManager()
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.distanceFilter = 100.0
-        self.locationManager.delegate = self
-        
-        //&* change this
-        self.locationManager.requestWhenInUseAuthorization()
-        
-    }
 
-    /*
-    
-    // MARK: Get Spot Data
-    
-    func fetchAllSavedSpots() {  // pass an NSFetchRequest?
-        var fetchedSpots = [Spot]()
-        
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: managedObjectContext)
-        fetchRequest.entity = entityDescription
-        
-        do {
-            fetchedSpots = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        
-        for spot in fetchedSpots {
-            print(spot)
-        }
-        
-        self.privateSpots = fetchedSpots
-        
-        NSNotificationCenter.defaultCenter()
+    func setUpLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 100.0
+        locationManager.requestLocation()
+        locationManager.requestWhenInUseAuthorization()
     }
     
+
     
-   */
     
-    // MARK: Save Spot Data
     
-    func saveSpot(spotInfo: SpotInfo) { // completion handler?
-        //let context = fetchedResultsController.mana
+    
+    
+    
+    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
         
-        let entity = NSEntityDescription.entityForName("Spot", inManagedObjectContext: managedObjectContext)
-        let spot =  NSEntityDescription.insertNewObjectForEntityForName(entity!.name!, inManagedObjectContext: managedObjectContext) as! Spot
-        
-        spot.name = spotInfo.name
-        spot.phoneNumber = spotInfo.phoneNumber
-        spot.latitude = spotInfo.latitude
-        spot.longitude = spotInfo.longitude
-    
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print(error)
-        }
-    }
-    
-    
-    func requestSpotsWithSearchQuery(inout search: SearchQueryAndResults, completionClosure: (error: NSError) -> ()) {
+        // Cancel any previous searches
+        currentMKLocalSearch.cancel()
         
         let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = search.query
-        request.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(0, 0), 10000, 10000)
+        request.naturalLanguageQuery = query
+        request.region = region
         
-        currentSearch = MKLocalSearch(request: request)
-        currentSearch.startWithCompletionHandler { (response, error) in
-            
-            guard response != nil else {
-                print("Search error: \(error)")
-                return
-            }
-            
-            // create array to store placemarks returned by search
-            var tempSpotInfos = Array<SpotInfo>()
-            
-            for item in response!.mapItems {
-                let name = item.name
-                let phoneNumber = item.phoneNumber
-                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
-                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
-                tempSpotInfos.append(tempSpotInfo)
-            }
-            
-            search.searchSpotsResults = tempSpotInfos
-            print("-----------------in startWithCompletionHandler")
-            self.currentSearchQueryAndResults = search
-        }
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        currentMKLocalSearch = MKLocalSearch(request: request)
         
-        NSNotificationCenter.defaultCenter().postNotificationName("New Search Completed", object: self)
-    }
-    
-    
-    
-    
-    // MARK: Category data
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //---
-    func loadSpotsIntoDataSourceAtStartup() {
-        
-        var spotsArrayFromCoreData = [Spot]()
-        
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: self.managedObjectContext)
-        fetchRequest.entity = entityDescription
-        
-        do {
-            spotsArrayFromCoreData = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        
-        for spot in spotsArrayFromCoreData {
-            print(spot)
-        }
-        
-        self.privateSpots = spotsArrayFromCoreData
-    }
-    
-    //---
-    func fetchSpotFromStoreWithTitle(title: String) -> [Spot] {
-        
-        var spotsArrayCopy = [Spot]()
-        
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Spot", inManagedObjectContext: self.managedObjectContext)
-        fetchRequest.entity = entityDescription
+        var responseCopy: MKLocalSearchResponse? = nil
         
         
-        let predicate = NSPredicate(format:"title = '\(title)'")
-        fetchRequest.predicate = predicate
-        
-        do {
-            spotsArrayCopy = try self.managedObjectContext.executeFetchRequest(fetchRequest) as! [Spot]
-            
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-        }
-        
-        for spot in spotsArrayCopy {
-            print(spot)
-        }
-        
-        return spotsArrayCopy
-    }
-    
-    //---
-//    func createSpotWithTitle(title: String?, subtitle: String?, latitude: Double?, longitude: Double?, category: Spot.Category)  {
-//        let managedSpot = Spot(title: title, subtitle: subtitle, latitude: latitude, longitude: longitude, category: category)
-//        self.privateSpots.append(managedSpot)
-//        self.saveContext()
-//        
-//    }
-//    
-//    
-    // MARK: - Search Methods
-    
-    //---
-    //  func saveSearch() {
-    
-    //   }
-    
-    //---
-    //func
-    
-    
-    // MARK: - CLLocation Methods
-    
-    //---
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let newLocation = locations.last {
-            //newLocation is most recent
-            //extract data to feed to GUI
-            // could return first if need to filter out
-            
-            
-            if newLocation.horizontalAccuracy < 0 {
-                // invalid accuracy
-                return
-            }
-            
-            // numbers in meters
-            if newLocation.horizontalAccuracy > 100 ||
-                newLocation.verticalAccuracy > 50 {
-                    // accuracy radius is so large, we don't want to use it
+        dispatch_sync(concurrentSpotQueue) {
+            self.currentMKLocalSearch.startWithCompletionHandler { (response, error) in
+                guard response != nil else {
+                    print("Search error: \(error)")
                     return
+                }
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+    //            var tempSpotInfos = Array<SpotInfo>()
+    //            
+    //            for item in response!.mapItems {
+    //                let name = item.name
+    //                let phoneNumber = item.phoneNumber
+    //                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
+    //                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
+    //                tempSpotInfos.append(tempSpotInfo)
+    //                
+    //            }
+                
+                responseCopy = response
             }
-            
         }
+        
+        return responseCopy
     }
     
-    //---
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        switch status {
-        case .Authorized, .AuthorizedWhenInUse:
-            locationManager.startUpdatingLocation()
-        default:
-            locationManager.stopUpdatingLocation()
-        }
-    }
+//    
+//    func requestSpotsWithSearchQuery(inout search: SearchQueryAndResults, completionClosure: (error: NSError) -> ()) {
+//        let request = MKLocalSearchRequest()
+//        request.naturalLanguageQuery = search.query
+//       // request.region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(0, 0), 10000, 10000)
+//        
+//        currentMKLocalSearch = MKLocalSearch(request: request)
+//        currentMKLocalSearch.startWithCompletionHandler { (response, error) in
+//            
+//            guard response != nil else {
+//                print("Search error: \(error)")
+//                return
+//            }
+//            
+//            // create array to store placemarks returned by search
+//            var tempSpotInfos = Array<SpotInfo>()
+//            
+//            for item in response!.mapItems {
+//                let name = item.name
+//                let phoneNumber = item.phoneNumber
+//                let (latitude, longitude) = SpotInfo.convertPlacemarkCoordinatesToLatitudeAndLongitude(item.placemark)
+//                let tempSpotInfo = SpotInfo(name: name, phoneNumber: phoneNumber, latitude: latitude, longitude: longitude)
+//                tempSpotInfos.append(tempSpotInfo)
+//            }
+//            
+//            search.searchSpotsResults = tempSpotInfos
+//            print("-----------------in startWithCompletionHandler")
+//            self.currentSearchQueryAndResults = search
+//        }
+//        
+//        NSNotificationCenter.defaultCenter().postNotificationName("New Search Completed", object: self)
+//    }
+    
+    
+
+
+    
+    
+    
+
+    
     
     
     
@@ -327,6 +209,76 @@ class DataStore: NSObject, CLLocationManagerDelegate
     }
 }
 
+extension DataStore: CLLocationManagerDelegate {
+    
+    func getCurrentLocation() -> CLLocation? {
+        
+        // locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.startUpdatingLocation()
+        
+        let location = locationManager.location
+        //        var coord = CLLocationCoordinate2D()
+        //
+        //        guard location != nil else {
+        //            return nil
+        //        }
+        //
+        //        coord.longitude = location!.coordinate.longitude
+        //        coord.latitude = location!.coordinate.latitude
+        
+        return location
+    }
+
+    
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        switch status {
+//        case .Authorized, .AuthorizedWhenInUse:
+//            locationManager.startUpdatingLocation()
+//        default:
+//            locationManager.stopUpdatingLocation()
+//        }
+        
+        if status == .AuthorizedWhenInUse {
+            locationManager.requestLocation() // new for iOS9
+        }
+
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let newLocation = locations.last {
+//            //newLocation is most recent
+//            //extract data to feed to GUI
+//            // could return first if need to filter out
+//            
+//            
+//            if newLocation.horizontalAccuracy < 0 {
+//                // invalid accuracy
+//                return
+//            }
+//            
+//            // numbers in meters
+//            if newLocation.horizontalAccuracy > 100 ||
+//                newLocation.verticalAccuracy > 50 {
+//                    // accuracy radius is so large, we don't want to use it
+//                    return
+//            }
+//            
+//        }
+
+    
+        if let location = locations.first {
+            print("location:: \(location)")
+        }
+    
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("error:: \(error)")
+    }
+    
+}
 
 
     

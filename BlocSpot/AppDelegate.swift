@@ -18,13 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let tabBarController = self.window!.rootViewController as! UITabBarController
-        print(tabBarController.viewControllers)
-        let mapNavigationController = tabBarController.viewControllers!.first as! UINavigationController
-        let listNavigationController = tabBarController.viewControllers!.last as! UINavigationController
+//        let tabBarController = self.window!.rootViewController as! UITabBarController
+//        print(tabBarController.viewControllers)
+//        let mapNavigationController = tabBarController.viewControllers!.first as! UINavigationController
+//        let listNavigationController = tabBarController.viewControllers!.last as! UINavigationController
+//        
         
-        let mapViewController = mapNavigationController.topViewController
-        let listViewController = listNavigationController.topViewController
+        let navigationController = self.window!.rootViewController as! UINavigationController
+
+        
+        let mapViewController = navigationController.topViewController
+      //  let listViewController = listNavigationController.topViewController
         
         
         //let dataStore = K.store

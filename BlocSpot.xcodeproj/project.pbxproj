@@ -31,11 +31,10 @@
 		22D36EAC1C68384500718968 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EAB1C68384500718968 /* MapViewController.swift */; };
 		22D36EB41C68F56700718968 /* DataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36EB31C68F56700718968 /* DataStoreTests.swift */; };
 		22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */; };
-		22D36F1D1C6ADDBF00718968 /* SearchTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */; };
 		22D36F2B1C6C303500718968 /* SearchQuery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F291C6C303500718968 /* SearchQuery+CoreDataProperties.swift */; };
 		22D36F2C1C6C303500718968 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F2A1C6C303500718968 /* SearchQuery.swift */; };
+		22D36F5A1C738A3200718968 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D36F591C738A3200718968 /* LocationSearchTable.swift */; };
 		22E8F2AF1C46F16B004E0906 /* SpotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E8F2AE1C46F16B004E0906 /* SpotTests.swift */; };
-		22F1AC271C51580800AE0263 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F1AC261C51580800AE0263 /* SearchTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,11 +85,10 @@
 		22D36EAB1C68384500718968 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		22D36EB31C68F56700718968 /* DataStoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreTests.swift; sourceTree = "<group>"; };
 		22D36F1A1C692A6200718968 /* SearchQueryAndResultsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQueryAndResultsInfo.swift; sourceTree = "<group>"; };
-		22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableDataProvider.swift; sourceTree = "<group>"; };
 		22D36F291C6C303500718968 /* SearchQuery+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SearchQuery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		22D36F2A1C6C303500718968 /* SearchQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
+		22D36F591C738A3200718968 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		22E8F2AE1C46F16B004E0906 /* SpotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotTests.swift; sourceTree = "<group>"; };
-		22F1AC261C51580800AE0263 /* SearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,15 +205,6 @@
 			name = Store;
 			sourceTree = "<group>";
 		};
-		22D36EAD1C68CC8900718968 /* SearchTableVC */ = {
-			isa = PBXGroup;
-			children = (
-				22F1AC261C51580800AE0263 /* SearchTableViewController.swift */,
-				22D36F1C1C6ADDBF00718968 /* SearchTableDataProvider.swift */,
-			);
-			name = SearchTableVC;
-			sourceTree = "<group>";
-		};
 		22D36EAE1C68CCAD00718968 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,8 +263,9 @@
 		22D36F2E1C6E1C9C00718968 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				22D36F2F1C6E1CD500718968 /* Search */,
 				22D36F321C6E40CE00718968 /* MapVC */,
+				22D36F5B1C738A3800718968 /* LocationSearchTable */,
+				22D36F2F1C6E1CD500718968 /* Search */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -283,7 +273,6 @@
 		22D36F2F1C6E1CD500718968 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				22D36EAD1C68CC8900718968 /* SearchTableVC */,
 				22D36EA01C66F08A00718968 /* SearchListVC */,
 			);
 			name = Search;
@@ -295,6 +284,14 @@
 				22D36EAB1C68384500718968 /* MapViewController.swift */,
 			);
 			name = MapVC;
+			sourceTree = "<group>";
+		};
+		22D36F5B1C738A3800718968 /* LocationSearchTable */ = {
+			isa = PBXGroup;
+			children = (
+				22D36F591C738A3200718968 /* LocationSearchTable.swift */,
+			);
+			name = LocationSearchTable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,12 +442,11 @@
 				22D36F2B1C6C303500718968 /* SearchQuery+CoreDataProperties.swift in Sources */,
 				22D36F2C1C6C303500718968 /* SearchQuery.swift in Sources */,
 				2294D4041C3DA2DF004328A3 /* AppDelegate.swift in Sources */,
-				22F1AC271C51580800AE0263 /* SearchTableViewController.swift in Sources */,
 				22B812741C4732CD00252FC5 /* Spot.swift in Sources */,
 				22D36E9D1C66EAB000718968 /* DataStore.swift in Sources */,
-				22D36F1D1C6ADDBF00718968 /* SearchTableDataProvider.swift in Sources */,
 				22B812731C4732CD00252FC5 /* Spot+CoreDataProperties.swift in Sources */,
 				22D36F1B1C692A6200718968 /* SearchQueryAndResultsInfo.swift in Sources */,
+				22D36F5A1C738A3200718968 /* LocationSearchTable.swift in Sources */,
 				22D36E9F1C66EDB100718968 /* Constants.swift in Sources */,
 				22D36EAC1C68384500718968 /* MapViewController.swift in Sources */,
 			);

@@ -7,122 +7,151 @@
 //
 
 import UIKit
+import MapKit
 
-class MapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+class MapViewController: UIViewController {
     
-   // private let searchResultsTableViewController //= UITableViewController()
-    //private let searchController: UISearchController//(searchResultsController: nil)
+    @IBOutlet weak var mapView: MKMapView!
+    let regionRadius: CLLocationDistance = 2000
+    
+    // &* declaring variables
+    //var searchResults: MKLocalSearchResponse? = nil
+    var searchResults = MKLocalSearchResponse()
+    
+    // controller-level scope to keep UISearchController in mem after it's created
+    var resultSearchController: UISearchController? = nil
     
     override func viewDidLoad() {
-        //super.viewDidLoad()
+        super.viewDidLoad()
         
-        let searchResultsTableViewController = UITableViewController()
-        let searchController = UISearchController(searchResultsController: searchResultsTableViewController)
-        searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
-        self.navigationItem.titleView = searchController.searchBar
+      //  setupSearchController()
+        
+        let locationSearchTable = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchTable") as! LocationSearchTable
+        resultSearchController = UISearchController(searchResultsController: locationSearchTable)
+        resultSearchController?.searchResultsUpdater = locationSearchTable
+        
+        let searchBar = resultSearchController!.searchBar
+        searchBar.sizeToFit()
+        searchBar.placeholder = "Search for places"
+        navigationItem.titleView = resultSearchController?.searchBar
+        
         self.definesPresentationContext = true
         
-        searchResultsTableViewController.tableView.dataSource = self
-        searchResultsTableViewController.tableView.delegate = self
-        searchController.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
+        K.store.setUpLocationManager()
+        let initialLocation = K.store.getCurrentLocation()
+        
+        //let honoluluLocation = CLLocation(latitude: 21.282778, longitude: -157.8294444)
+
+        
+        if let initialLocation = initialLocation {
+            centerMapOnLocation(initialLocation)
+        } else {
+           // centerMapOnLocation(honoluluLocation)
+        }
+        
+        // determines whether the Navigation Bar disappears when the search results are shown
+        resultSearchController?.hidesNavigationBarDuringPresentation = false
+        // gives the modal overlay a semi-transparent background when the search bar is selected
+        resultSearchController?.dimsBackgroundDuringPresentation = true
+        //limits the overlap area to just the VC's frame instead of the whole nav controller
+        definesPresentationContext = true
         
         
        // self.initializeSearchController()
         
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        print("foo")
+    func centerMapOnLocation(location: CLLocation) {
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated:true)
     }
     
+    
+    
+}
+
+
+extension MapViewController: UISearchBarDelegate, UISearchControllerDelegate/*, UISearchResultsUpdating*/ {
+    
+    
+    func setupSearchController() {
+        
+        // the TableVC used to display the results of a search
+        let searchResultsController = UITableViewController()
+        searchResultsController.automaticallyAdjustsScrollViewInsets = false
+        searchResultsController.tableView.dataSource = self
+        searchResultsController.tableView.delegate = self
+
+        
+        // Initialize UISearchController-> should this be instance variable?
+        let searchController = UISearchController(searchResultsController: searchResultsController)
+        searchController.delegate = self
+        searchController.searchBar.delegate = self
+      //  searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        searchController.searchBar.searchBarStyle = UISearchBarStyle.Minimal
+        self.navigationItem.titleView = searchController.searchBar
+        
+        
+        
+
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if !searchText.isEmpty {
+            if let searchResults = K.store.searchQuery(searchText, region: mapView.region) {
+                self.searchResults = searchResults
+            } else {
+                
+            }
+        }
+    }
+    
+    func willPresentSearchController(searchController: UISearchController) {
+        print("in willPresentSC-----------")
+    }
+    
+    
+    
+    
+//    func updateSearchResultsForSearchController(searchController: UISearchController) {
+//        var searchString = searchController.searchBar.text
+//        
+//    }
+    
+//    func searchForText(searchText: String)
+    
+}
+    
+extension MapViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return searchResults.mapItems.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultsCell", forIndexPath: indexPath)
+        let item = searchResults.mapItems[indexPath.row]
+        
+        cell.textLabel?.text = item.placemark.name
+        cell.detailTextLabel?.text = item.placemark.addressDictionary?["Street"] as? String
+        
+        return cell
+        
+        
     }
+}
+
+extension MapViewController: MKMapViewDelegate {
     
     /*
-
-    
-    searchResultsController.tableView.dataSource = self;
-    searchResultsController.tableView.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    
-    
-    
-    @implementation UIViewControllerSubclass
-    
-    - (void)viewDidLoad
-    {
-    [super viewDidLoad];
-    // Do any custom init from here...
-    
-    // Create a UITableViewController to present search results since the actual view controller is not a subclass of UITableViewController in this case
-    UITableViewController *searchResultsController = [[UITableViewController alloc] init];
-    
-    // Init UISearchController with the search results controller
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultsController];
-    
-    // Link the search controller
-    self.searchController.searchResultsUpdater = self;
-    
-    // This is obviously needed because the search bar will be contained in the navigation bar
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    
-    // Required (?) to set place a search bar in a navigation bar
-    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    
-    // This is where you set the search bar in the navigation bar, instead of using table view's header ...
-    self.navigationItem.titleView = self.searchController.searchBar;
-    
-    // To ensure search results controller is presented in the current view controller
-    self.definesPresentationContext = YES;
-    
-    // Setting delegates and other stuff
-    searchResultsController.tableView.dataSource = self;
-    searchResultsController.tableView.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;        
-    }
+The Map View Delegate is responsible for managing annotations. You’ll be using delegate methods to customize pins and callouts later on.
 
 */
     
-    
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-//        self.searchController.active = true
-//        self.searchController.searchBar.userInteractionEnabled = true
-//        print(self.searchController.searchBar.becomeFirstResponder())
-//        
-//        
-//        
-//        
-    }
-    
-    func initializeSearchController() {
-//        //   self.searchController.searchResultsUpdater = self
-//        self.searchController.dimsBackgroundDuringPresentation = false
-//        self.searchController.delegate = self
-//        self.searchController.searchBar.delegate = self
-//        self.searchController.searchBar.sizeToFit()
-//        self.definesPresentationContext = true
-//        self.navigationItem.titleView = self.searchController.searchBar
-//        self.searchController.active = true
-//        
-    }
-    
-    
 }
+
