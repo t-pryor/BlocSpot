@@ -54,14 +54,45 @@ class DataStore: NSObject {
     }
     
     
-//    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
-//        
-//        // Cancel any previous searches
-//        currentMKLocalSearch.cancel()
-//        
+    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
+        
+        // Cancel any previous searches
+       // currentMKLocalSearch.cancel()
+        
+        var responseCopy: MKLocalSearchResponse? = nil
+
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = query
+        request.region = region
+
+        let search = MKLocalSearch(request: request)
+        
+        let semaphore = dispatch_semaphore_create(0)
+        
+        dispatch_async(concurrentSearchQueue) {
+            search.startWithCompletionHandler{ response, error in
+                guard let response = response else {
+                    return
+                }
+                responseCopy = response
+    
+                dispatch_semaphore_signal(semaphore)
+             }
+        }
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+        
+        print(responseCopy)
+        return responseCopy
+    
+
+        
+        
+        
 //        let request = MKLocalSearchRequest()
 //        request.naturalLanguageQuery = query
 //        request.region = region
+//        
 //        
 //        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 //        currentMKLocalSearch = MKLocalSearch(request: request)
@@ -82,7 +113,10 @@ class DataStore: NSObject {
 //        }
 //        
 //        return responseCopy
-//    }
+        
+        
+        
+    }
     
 
     

@@ -27,8 +27,11 @@ class MapViewController: UIViewController {
       //  setupSearchController()
         
         let locationSearchTable = storyboard!.instantiateViewControllerWithIdentifier("LocationSearchTable") as! LocationSearchTable
+        locationSearchTable.mapView = mapView
         searchResultsController = UISearchController(searchResultsController: locationSearchTable)
         searchResultsController?.searchResultsUpdater = locationSearchTable
+        
+        
         
         let searchBar = searchResultsController!.searchBar
         searchBar.sizeToFit()
