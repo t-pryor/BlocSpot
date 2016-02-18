@@ -18,45 +18,51 @@ class LocationSearchTable: UITableViewController {
     // mapView var is a handle to the map from the previous screen
     var mapView: MKMapView? = nil
     
+    func parseAddress(selectedItem: MKPlacemark) -> String {
+        // put a space between "4" and "Melrose Place"
+        let firstSpace = (selectedItem.subThoroughfare != nil && selectedItem.thoroughfare != nil) ? " " : ""
+        // put a comma between street and city/stae
+        let comma = (selectedItem.subThoroughfare != nil || selectedItem.thoroughfare != nil) && (selectedItem.subAdministrativeArea != nil || selectedItem.administrativeArea != nil) ? ", " : ""
+        // put a space between "Washington" and "DC"
+        let secondSpace = (selectedItem.subAdministrativeArea != nil && selectedItem.administrativeArea != nil ? " " : "")
+        
+        let addressLine = String(format: "%@%@%@%@%@%@%@",
+            // street number
+            selectedItem.subThoroughfare ?? "",
+            firstSpace,
+            // street name
+            selectedItem.thoroughfare ?? "",
+            comma,
+            // city
+            selectedItem.locality ?? "",
+            secondSpace,
+            // state
+            selectedItem.administrativeArea ?? ""
+        )
+    
+        return " "
+    }
+    
+    
     
 }
 
 extension LocationSearchTable: UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
+        
         guard let mapView = mapView, let searchBarText = searchController.searchBar.text else {
             return
         }
         
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = searchBarText
-        request.region = mapView.region
-
-        let search = MKLocalSearch(request: request)
-        
-        search.startWithCompletionHandler{ response, error in
-            guard let response = response else {
-                return
-            }
-            self.matchingItems = response.mapItems
+        let completionClosure = { (results: Array<MKMapItem>)  -> () in
+            self.matchingItems = results
             self.tableView.reloadData()
         }
         
-        
-//        let response = K.store.searchQuery(searchBarText, region: mapView.region)
-//        print(response)  // &* Falko: always nil
-//        
-//        if let response = response {
-//            matchingItems = response.mapItems
-//            tableView.reloadData()
-//
-//        } else {
-//            return
-//        }
-    
+        K.store.searchQuery(searchBarText, region: mapView.region, completionClosure: completionClosure)
         
     }
-    
 }
 
 extension LocationSearchTable {
@@ -71,6 +77,10 @@ extension LocationSearchTable {
         cell.detailTextLabel?.text = ""
         return cell
     }
+    
+    
+    
+    
     
     
 }

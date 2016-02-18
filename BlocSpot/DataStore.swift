@@ -12,6 +12,8 @@ import CoreLocation
 import MapKit
 
 
+public typealias SearchQueryCompletionClosure = (Array<MKMapItem>) -> ()
+
 class DataStore: NSObject {
     
     // singleton
@@ -53,72 +55,26 @@ class DataStore: NSObject {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    
-    func searchQuery(query: String, region: MKCoordinateRegion) -> MKLocalSearchResponse? {
+    func searchQuery(query: String, region: MKCoordinateRegion, completionClosure: SearchQueryCompletionClosure) {
+   
+        //Cancel any previous searches
+        // currentMKLocalSearch.cancel()
         
-        // Cancel any previous searches
-       // currentMKLocalSearch.cancel()
-        
-        var responseCopy: MKLocalSearchResponse? = nil
-
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = query
         request.region = region
 
         let search = MKLocalSearch(request: request)
-        
-        let semaphore = dispatch_semaphore_create(0)
-        
-        dispatch_async(concurrentSearchQueue) {
-            search.startWithCompletionHandler{ response, error in
-                guard let response = response else {
-                    return
-                }
-                responseCopy = response
-    
-                dispatch_semaphore_signal(semaphore)
-             }
+
+        search.startWithCompletionHandler { (response: MKLocalSearchResponse? , error: NSError?) in
+            guard let response = response else {
+                print("Search error: \(error)")
+                return
+            }
+            
+            completionClosure(response.mapItems)
         }
-        
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-        
-        print(responseCopy)
-        return responseCopy
-    
-
-        
-        
-        
-//        let request = MKLocalSearchRequest()
-//        request.naturalLanguageQuery = query
-//        request.region = region
-//        
-//        
-//        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-//        currentMKLocalSearch = MKLocalSearch(request: request)
-//        
-//        var responseCopy: MKLocalSearchResponse? = nil
-//        
-//        //&* concurrentSearchQueue, could it be declared locally
-//        dispatch_sync(concurrentSearchQueue) {
-//            self.currentMKLocalSearch.startWithCompletionHandler { (response, error) in
-//                guard response != nil else {
-//                    print("Search error: \(error)")
-//                    return
-//                }
-//                
-//                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                responseCopy = response
-//            }
-//        }
-//        
-//        return responseCopy
-        
-        
-        
     }
-    
-
     
     // MARK: - Core Data stack
     lazy var applicationDocumentsDirectory: NSURL = {
